@@ -18,10 +18,10 @@ install_dir=$RPM_BUILD_ROOT
 
 # Copy the helloworld script to the install directory
 mkdir -p $install_dir
-install -m 0755 %{name} $install_dir/%{name}
+install -m 0755 helloworld $install_dir/%{name}
 
 %files
 # Define the path to the installed helloworld script
-%{name}
+/%{_bindir}/%{name}
 
 %changelog
