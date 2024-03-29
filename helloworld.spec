@@ -13,10 +13,13 @@ Hello World!
 %build
 
 %install
-mkdir -p %{buildroot}/%{_bindir}
-install -m 0755 %{name} %{buildroot}/%{_bindir}/%{name}
+# Create directory for installation
+mkdir -p %{buildroot}/usr/bin
+
+# Install the helloworld executable
+install -m 0755 %{SOURCE0} %{buildroot}/usr/bin/helloworld
 
 %files
-%{_bindir}/%{name}
+/usr/bin/helloworld
 
 %changelog
