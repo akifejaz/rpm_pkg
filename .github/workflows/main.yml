@@ -1,4 +1,4 @@
-name: Build and Distribute RPM Package
+name: Build RPM Package
 
 on:
   push:
@@ -16,13 +16,11 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
-      - name: Install necessary packages
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y rpm alien
-
       - name: Make helloworld executable
         run: chmod +x helloworld
+
+      - name: Install RPM
+        run: sudo apt-get install rpm -y
 
       - name: Build RPM package
         run: |
@@ -30,31 +28,8 @@ jobs:
           mv rpm/SRPMS/*.rpm .
           mv rpm/RPMS/*/*.rpm .
           rm -rf rpm
-
       - name: Upload RPM artifact
         uses: actions/upload-artifact@v2
         with:
           name: helloworld-rpm
           path: '*.rpm'
-
-  distribute:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Set up Git repository
-        uses: actions/checkout@v2
-
-      - name: Install Alien
-        run: sudo apt-get install alien
-
-      - name: Download RPM artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: helloworld-rpm
-
-      - name: Install RPM package with Alien
-        run: sudo alien -i *.rpm
-
-      - name: Run helloworld
-        run: helloworld
