@@ -19,7 +19,7 @@ jobs:
       - name: Install necessary packages
         run: |
           sudo apt-get update
-          sudo apt-get install -y rpm unzip
+          sudo apt-get install -y rpm alien
 
       - name: Make helloworld executable
         run: chmod +x helloworld
@@ -45,15 +45,15 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
+      - name: Install Alien
+        run: sudo apt-get install alien
+
       - name: Download RPM artifact
         uses: actions/download-artifact@v2
         with:
           name: helloworld-rpm
 
-      - name: Install RPM package dependencies
-        run: sudo apt-get install -y bash
-
-      - name: Install RPM package
+      - name: Install RPM package with Alien
         run: sudo alien -i *.rpm
 
       - name: Run helloworld
