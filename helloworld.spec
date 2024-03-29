@@ -13,15 +13,10 @@ Hello World!
 %build
 
 %install
-# Define the directory where the RPM package will be installed
-install_dir=$RPM_BUILD_ROOT
-
-# Copy the helloworld script to the install directory
-mkdir -p $install_dir
-install -m 0755 helloworld $install_dir/%{name}
+mkdir -p %{buildroot}/%{_bindir}
+install -m 0755 %{name} %{buildroot}/%{_bindir}/%{name}
 
 %files
-# Define the path to the installed helloworld script
-/%{_bindir}/%{name}
+%{_bindir}/%{name}
 
 %changelog
