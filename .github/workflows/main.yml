@@ -50,8 +50,11 @@ jobs:
         with:
           name: helloworld-rpm
 
+      - name: Install RPM package dependencies
+        run: sudo apt-get install -y bash
+
       - name: Install RPM package
-        run: sudo rpm -i *.rpm
+        run: sudo alien -i *.rpm
 
       - name: Run helloworld
         run: helloworld
